@@ -59,7 +59,10 @@ const getData = () =>{
         console.log(err);
     })
 }
-getData()
+
+setInterval(() => {
+    getData()
+}, 500);
 
 // update
 //   update(ref(db, "Try/"+ "Raktim"), {
