@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <input type="text" id="input">
+
+    <input type="button" value="submit" id="btn">
+
+    <div id="main">
+
+    </div>
+
+    <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyDMtR1HjJJafyYWqzLxuppZiu-PBtfuLX0",
+    authDomain: "paddle-hit.firebaseapp.com",
+    projectId: "paddle-hit",
+    storageBucket: "paddle-hit.appspot.com",
+    messagingSenderId: "183694422838",
+    appId: "1:183694422838:web:46cfc715a5c091354db997"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  import {getDatabase, ref,get, set,child, update, remove} from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js"
+  const db = getDatabase()
+
+  const input = document.getElementById("input")
+  const btn = document.getElementById("btn")
+  const main = document.getElementById("main")
+  const div = document.createElement("div")
+//   Select Data
+const getData = () =>{
+    const dbref = ref(db);
+    get(child(dbref, "Try/"+ "Raktim"))
+    .then((snapshot) => {
+        if(snapshot.exists()){
+            const p = document.createElement("p")
+            p.innerText = snapshot.val().Name
+            main.appendChild(p)
+            console.log(snapshot.val().Name);
+        }else{
+            console.log("Data Nai");
+        }
+    })
+    .catch((err) => {
+        console.log(err);
+    })
+}
+getData()
+
+// update
+//   update(ref(db, "Try/"+ "Raktim"), {
+//     Name: "Avilash"
+//   })
+//   .then(() => {
+//     console.log("Success");
+//   })
+//   .catch((err) => {
+//     console.log("Err");
+//   })
+
+//   SET DATA
+btn.addEventListener("click", () => {
+    set(ref(db, "Try/"+ "Raktim"), {
+      Name: input.value
+    })
+    .then(() => {
+      console.log("Success");
+      getData()
+    })
+    .catch((err) => {
+      console.log("Err");
+    })
+})
+</script>
+</body>
+</html>
